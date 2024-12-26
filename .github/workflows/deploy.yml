@@ -27,3 +27,15 @@ jobs:
 
             - name: Verify pushed image
               run: docker pull aakarshbeohar/payme-client:latest
+            
+            - name: Deploy to EC2
+              uses: applyboy/ssh-action@master
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USERNAME }}
+                key: ${{ secrets.SSH_KEY }}
+                script: |
+                  sudo docker pull aakarshbeohar/payme-client:latest
+                  sudo docker stop payme-client || true
+                  sudo docker rm payme-client || true
+                  sudo docker run -d --name payme-client -p 3005:3000 aakarshbeohar/payme-client:latest
