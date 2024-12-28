@@ -39,6 +39,3 @@ jobs:
                   sudo docker stop payme-client || true
                   sudo docker rm payme-client || true
                   sudo docker run -d --name payme-client -p 3005:3000 aakarshbeohar/payme-client:latest
-
-
-                  
